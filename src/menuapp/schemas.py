@@ -26,7 +26,7 @@ class CreateMenu(BaseModel):
 
 
 class BaseSubMenu(BaseModel):
-    id: Optional[int]
+    id: Optional[str]
     title: Optional[str]
     description: Optional[str]
     dishes_count: Optional[int]
