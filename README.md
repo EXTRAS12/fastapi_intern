@@ -7,9 +7,10 @@ git clone https://github.com/EXTRAS12/fastapi_intern.git
 ```
 
 Создайте виртуальное окружение и запустите:
+```
 python3 -m venv venv
 source venv/bin/activate
-
+```
 установите зависимости: 
 ```
 pip install -r requirements.txt
