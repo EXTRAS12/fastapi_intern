@@ -31,9 +31,11 @@ DB_PASS=postgres
 ```
 alembic upgrade head
 ```
-
+```
 Перейдите в src и запустите python main.py 
+```
+```
 Или uvicorn main:app --reload
-
+```
 
 
