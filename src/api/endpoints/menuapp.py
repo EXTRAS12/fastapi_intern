@@ -7,7 +7,6 @@ from core.utils import get_db
 from menuapp import service
 from menuapp.schemas import (
     BaseMenu,
-    BaseSubMenu,
     CreateMenu,
     Dish,
     DishCreate,
