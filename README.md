@@ -11,7 +11,7 @@ git clone https://github.com/EXTRAS12/fastapi_intern.git
 python3 -m venv venv
 source venv/bin/activate
 ```
-установите зависимости: 
+Установите зависимости: 
 ```
 pip install -r requirements.txt
 ```
