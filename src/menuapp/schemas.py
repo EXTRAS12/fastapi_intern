@@ -4,53 +4,65 @@ from pydantic import BaseModel
 
 
 class BaseMenu(BaseModel):
-    id: Optional[str]
     title: Optional[str]
     description: Optional[str]
-    dishes_count: Optional[int]
-    submenus_count: Optional[int]
+
+
+class PatchMenu(BaseMenu):
+    pass
+
+
+class CreateMenu(BaseModel):
+    submenus_count: int = 0
+    dishes_count: int = 0
+
+
+class Menu(BaseMenu):
+    id: str
+    submenus_count: int
+    dishes_count: int
 
     class Config:
         orm_mode = True
 
 
-class PatchMenu(BaseMenu):
-    title: str
-    description: str
-    dishes_count: Optional[int]
-
-
-class CreateMenu(BaseModel):
-    title: Optional[str]
-    description: Optional[str]
-
-
 class BaseSubMenu(BaseModel):
-    id: Optional[str]
-    title: Optional[str]
+    title: str
     description: Optional[str]
-    dishes_count: Optional[int]
+
+
+class SubMenu(BaseSubMenu):
+    id: str
+    dishes_count: int
 
     class Config:
         orm_mode = True
 
 
 class PatchSubMenu(BaseSubMenu):
-    title: Optional[str]
-    description: Optional[str]
+    pass
 
 
-class Dish(BaseModel):
-    id: Optional[int]
-    title: Optional[str]
+class SubMenuCreate(BaseSubMenu):
+    dishes_count: int = 0
+
+
+class DishBase(BaseModel):
+    title: str
     description: Optional[str]
     price: Optional[str]
 
+
+class DishCreate(DishBase):
+    pass
+
+
+class DishUpdate(DishBase):
+    pass
+
+
+class Dish(DishBase):
+    id: str
+
     class Config:
         orm_mode = True
-
-
-class UpgradeDish(Dish):
-    title: str
-    description: str
-    price: float

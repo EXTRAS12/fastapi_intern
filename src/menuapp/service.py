@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 
-from menuapp.models import Menu, SubMenu, Dish
-from .schemas import *
+from menuapp.models import Dish, Menu, SubMenu
 
+from .schemas import CreateMenu, DishCreate, SubMenuCreate
 
 """MENU SECTION"""
 
@@ -15,7 +15,7 @@ def get_menu_by_id(db: Session, menu_id: int):
     return db.query(Menu).filter(Menu.id == menu_id).first()
 
 
-def create_menu(db: Session, item: BaseMenu):
+def create_menu(db: Session, item: CreateMenu):
     menu = Menu(**item.dict())
     db.add(menu)
     db.commit()
@@ -53,7 +53,7 @@ def get_submenu_by_id(db: Session, submenu_id: int):
     return db.query(SubMenu).filter(SubMenu.id == submenu_id).first()
 
 
-def create_submenu(db: Session, submenu: BaseSubMenu, menu_id: int):
+def create_submenu(db: Session, submenu: SubMenuCreate, menu_id: int):
     db_submenu = SubMenu(**submenu.dict())
     db_submenu.menu_id = menu_id
     get_menu_by_id(db=db, menu_id=menu_id).submenus_count += 1
@@ -92,8 +92,40 @@ def get_submenus_count(db: Session, menu_id):
 """DISH SECTION"""
 
 
+def create_dish(db: Session, dish: DishCreate, menu_id: int, submenu_id: int):
+    db_dish = Dish(**dish.dict())
+    db_dish.submenu_id = submenu_id
+    get_menu_by_id(db=db, menu_id=menu_id).dishes_count += 1
+    get_submenu_by_id(db=db, submenu_id=submenu_id).dishes_count += 1
+    db.add(db_dish)
+    db.commit()
+    db.refresh(db_dish)
+    return db_dish
+
+
+def dishes_list(submenu_id: int, db: Session):
+    return db.query(Dish).filter(Dish.submenu_id == submenu_id).all()
+
+
 def get_dish_by_id(db: Session, dish_id: int):
     return db.query(Dish).filter(Dish.id == dish_id).first()
+
+
+def update_dish(db: Session, dish_id: int):
+    db.commit()
+    return get_dish_by_id(db=db, dish_id=dish_id)
+
+
+def delete_dish(db: Session, dish_id: int, menu_id: int, submenu_id: int):
+    db_dish = get_dish_by_id(db, dish_id)
+    if db_dish is None:
+        return None
+    else:
+        get_menu_by_id(db=db, menu_id=menu_id).dishes_count -= 1
+        get_submenu_by_id(db=db, submenu_id=submenu_id).dishes_count -= 1
+        db.delete(db_dish)
+        db.commit()
+        return True
 
 
 def get_dish_by_title(db: Session, dish_title: str):
