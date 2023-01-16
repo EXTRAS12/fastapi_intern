@@ -18,15 +18,19 @@ pip install -r requirements.txt
 
 Подключите базу данных
 Пример:
+```
 DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=fastapi_intern
 DB_USER=postgres
 DB_PASS=postgres
+```
 
 Сделайте миграцию:
 
+```
 alembic upgrade head
+```
 
 Перейдите в src и запустите python main.py 
 Или uvicorn main:app --reload
