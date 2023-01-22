@@ -1,7 +1,8 @@
 import uvicorn
-from fastapi import FastAPI, Response, Request
-from db.database import SessionLocal
-from api.routes import routes
+from fastapi import FastAPI, Request, Response
+
+from src.api.routes import routes
+from src.db.database import SessionLocal
 
 app = FastAPI(title="Rest menu")
 
@@ -20,8 +21,8 @@ async def db_session_middleware(request: Request, call_next):
 # @app.on_event("startup")
 # async def startup():
 #     await database.connect()
-#
-#
+
+
 # @app.on_event("shutdown")
 # async def shutdown():
 #     await database.disconnect()

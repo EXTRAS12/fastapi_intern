@@ -3,20 +3,11 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from core.utils import get_db
-from menuapp import service
-from menuapp.schemas import (
-    BaseMenu,
-    CreateMenu,
-    Dish,
-    DishCreate,
-    DishUpdate,
-    Menu,
-    PatchMenu,
-    PatchSubMenu,
-    SubMenu,
-    SubMenuCreate,
-)
+from src.core.utils import get_db
+from src.menuapp import service
+from src.menuapp.schemas import (BaseMenu, CreateMenu, Dish, DishCreate,
+                                 DishUpdate, Menu, PatchMenu, PatchSubMenu,
+                                 SubMenu, SubMenuCreate)
 
 router = APIRouter()
 
@@ -50,7 +41,7 @@ def update_menu(menu_id: int, item: PatchMenu, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="menu not found")
 
 
-@router.delete("/api/v1/menus/{menu_id}", response_model=BaseMenu, status_code=status.HTTP_200_OK)
+@router.delete("/api/v1/menus/{menu_id}", status_code=status.HTTP_200_OK)
 def delete_menu(menu_id: int, db: Session = Depends(get_db)):
     menu = service.delete_menu(db=db, menu_id=menu_id)
     if menu is None:

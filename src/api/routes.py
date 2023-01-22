@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from .endpoints import menuapp
 
+from .endpoints import menuapp
 
 routes = APIRouter()
 

@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  test_web_app:
+    container_name: test_web_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "pytest -vv"
+    volumes:
+      - .:/app
+    networks:
+      - web_app_network
+    environment:
+      - DB_HOST=database
+      - DB_NAME=fastapi_intern
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - SQLALCHEMY_SILENCE_UBER_WARNING=1
+    ports:
+      - "8080:8080"
+
+networks:
+  web_app_network:
+    external: true

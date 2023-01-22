@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Float
-from db.database import Base
+from sqlalchemy import Column, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
+
+from src.db.database import Base
 
 
 class Menu(Base):
@@ -38,4 +39,3 @@ class Dish(Base):
     submenu_id = Column(Integer, ForeignKey("submenus.id"))
 
     submenu = relationship("SubMenu", back_populates="dishes")
-

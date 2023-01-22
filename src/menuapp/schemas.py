@@ -12,7 +12,7 @@ class PatchMenu(BaseMenu):
     pass
 
 
-class CreateMenu(BaseModel):
+class CreateMenu(BaseMenu):
     submenus_count: int = 0
     dishes_count: int = 0
 
