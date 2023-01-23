@@ -37,7 +37,7 @@ MANIFEST
 *.spec
 venv
 .venv
-
+.env
 django_cache
 __pycache__/
 */__pycache__/
