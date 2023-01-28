@@ -11,8 +11,7 @@ class PatchMenu(BaseMenu):
 
 
 class CreateMenu(BaseMenu):
-    submenus_count: int = 0
-    dishes_count: int = 0
+    pass
 
 
 class Menu(BaseMenu):
@@ -42,7 +41,7 @@ class PatchSubMenu(BaseSubMenu):
 
 
 class SubMenuCreate(BaseSubMenu):
-    dishes_count: int = 0
+    pass
 
 
 class DishBase(BaseModel):

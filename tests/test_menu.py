@@ -25,8 +25,6 @@ def test_create_menu():
         json={
             'title': 'Menu 1',
             'description': 'Description 1',
-            'submenus_count': 0,
-            'dishes_count': 0,
         },
     )
     assert response.json() == {
@@ -90,8 +88,6 @@ def test2_create_menu():
         json={
             'title': 'Menu 1',
             'description': 'Description 1',
-            'submenus_count': 0,
-            'dishes_count': 0,
         },
     )
     assert response.json() == {
@@ -114,7 +110,6 @@ def test_submenu_post():
         json={
             'title': 'My submenu 1',
             'description': 'My submenu description 1',
-            'dishes_count': 0,
         },
     )
     assert response.json() == {
@@ -161,7 +156,6 @@ def test_post_submenu1():
         json={
             'title': 'My submenu 2',
             'description': 'My submenu description 2',
-            'dishes_count': 0,
         },
     )
     assert response.json() == {

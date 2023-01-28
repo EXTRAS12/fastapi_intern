@@ -41,7 +41,7 @@ async def startup():
     FastAPICache.init(RedisBackend(redis), prefix='fastapi-cache')
 
 
-app.include_router(routes, tags=['Menu rest'])
+app.include_router(routes)
 
 
 if __name__ == '__main__':
