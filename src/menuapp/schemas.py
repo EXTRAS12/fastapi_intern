@@ -1,11 +1,9 @@
-from typing import Optional
-
 from pydantic import BaseModel
 
 
 class BaseMenu(BaseModel):
-    title: Optional[str]
-    description: Optional[str]
+    title: str | None
+    description: str | None
 
 
 class PatchMenu(BaseMenu):
@@ -28,7 +26,7 @@ class Menu(BaseMenu):
 
 class BaseSubMenu(BaseModel):
     title: str
-    description: Optional[str]
+    description: str | None
 
 
 class SubMenu(BaseSubMenu):
@@ -49,8 +47,8 @@ class SubMenuCreate(BaseSubMenu):
 
 class DishBase(BaseModel):
     title: str
-    description: Optional[str]
-    price: Optional[str]
+    description: str | None
+    price: str | None
 
 
 class DishCreate(DishBase):

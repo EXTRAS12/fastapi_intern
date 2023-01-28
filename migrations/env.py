@@ -1,16 +1,14 @@
-from logging.config import fileConfig
-
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
-
-from alembic import context
 import os
 import sys
-sys.path.append(os.path.join(sys.path[0], 'src'))
+from logging.config import fileConfig
 
-from core.config import DB_HOST, DB_PORT, DB_USER, DB_NAME, DB_PASS
+from alembic import context
+from sqlalchemy import engine_from_config, pool
 
 from base import Base
+from core.config import DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER
+
+sys.path.append(os.path.join(sys.path[0], 'src'))
 
 
 # this is the Alembic Config object, which provides
@@ -18,11 +16,11 @@ from base import Base
 config = context.config
 
 section = config.config_ini_section
-config.set_section_option(section, "DB_HOST", DB_HOST)
-config.set_section_option(section, "DB_PORT", DB_PORT)
-config.set_section_option(section, "DB_USER", DB_USER)
-config.set_section_option(section, "DB_NAME", DB_NAME)
-config.set_section_option(section, "DB_PASS", DB_PASS)
+config.set_section_option(section, 'DB_HOST', DB_HOST)
+config.set_section_option(section, 'DB_PORT', DB_PORT)
+config.set_section_option(section, 'DB_USER', DB_USER)
+config.set_section_option(section, 'DB_NAME', DB_NAME)
+config.set_section_option(section, 'DB_PASS', DB_PASS)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -53,12 +51,12 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
+    url = config.get_main_option('sqlalchemy.url')
     context.configure(
         url=url,
         target_metadata=target_metadata,
         literal_binds=True,
-        dialect_opts={"paramstyle": "named"},
+        dialect_opts={'paramstyle': 'named'},
     )
 
     with context.begin_transaction():
@@ -74,14 +72,13 @@ def run_migrations_online() -> None:
     """
     connectable = engine_from_config(
         config.get_section(config.config_ini_section),
-        prefix="sqlalchemy.",
+        prefix='sqlalchemy.',
         poolclass=pool.NullPool,
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection,
+                          target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()

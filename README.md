@@ -28,7 +28,7 @@ git clone https://github.com/EXTRAS12/fastapi_intern.git
 python3 -m venv venv
 source venv/bin/activate
 ```
-Установите зависимости: 
+Установите зависимости:
 ```
 pip install -r requirements.txt
 ```
@@ -50,10 +50,8 @@ DB_PASS=postgres
 alembic upgrade head
 ```
 ```
-Перейдите в src и запустите python main.py 
+Перейдите в src и запустите python main.py
 ```
 ```
 Или uvicorn main:app --reload
 ```
-
-

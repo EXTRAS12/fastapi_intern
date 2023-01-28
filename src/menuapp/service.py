@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
 from .models import Dish, Menu, SubMenu
-from .schemas import BaseMenu, CreateMenu, DishCreate, SubMenuCreate
+from .schemas import CreateMenu, DishCreate, SubMenuCreate
 
 """MENU SECTION"""
 
