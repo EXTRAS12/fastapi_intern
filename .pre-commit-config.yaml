@@ -26,7 +26,12 @@ repos:
     -   id: ruff
         args:
         - --fix
-        exclude: __init__.py
+
+-   repo: https://github.com/asottile/add-trailing-comma
+    rev: v2.4.0
+    hooks:
+    -   id: add-trailing-comma
+        args: [--py36-plus]
 
 -   repo: https://github.com/pycqa/isort
     rev: 5.10.1

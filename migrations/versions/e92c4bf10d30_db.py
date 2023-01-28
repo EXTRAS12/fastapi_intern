@@ -27,7 +27,10 @@ def upgrade() -> None:
         sa.PrimaryKeyConstraint('id'),
     )
     op.create_index(
-        op.f('ix_menus_description'), 'menus', ['description'], unique=False
+        op.f('ix_menus_description'),
+        'menus',
+        ['description'],
+        unique=False,
     )
     op.create_index(op.f('ix_menus_id'), 'menus', ['id'], unique=False)
     op.create_index(op.f('ix_menus_title'), 'menus', ['title'], unique=False)
@@ -45,11 +48,16 @@ def upgrade() -> None:
         sa.PrimaryKeyConstraint('id'),
     )
     op.create_index(
-        op.f('ix_submenus_description'), 'submenus', ['description'], unique=False
+        op.f('ix_submenus_description'),
+        'submenus',
+        ['description'],
+        unique=False,
     )
     op.create_index(op.f('ix_submenus_id'), 'submenus', ['id'], unique=False)
-    op.create_index(op.f('ix_submenus_title'),
-                    'submenus', ['title'], unique=False)
+    op.create_index(
+        op.f('ix_submenus_title'),
+        'submenus', ['title'], unique=False,
+    )
     op.create_table(
         'dishes',
         sa.Column('id', sa.Integer(), nullable=False),
@@ -64,7 +72,10 @@ def upgrade() -> None:
         sa.PrimaryKeyConstraint('id'),
     )
     op.create_index(
-        op.f('ix_dishes_description'), 'dishes', ['description'], unique=False
+        op.f('ix_dishes_description'),
+        'dishes',
+        ['description'],
+        unique=False,
     )
     op.create_index(op.f('ix_dishes_id'), 'dishes', ['id'], unique=False)
     op.create_index(op.f('ix_dishes_title'), 'dishes', ['title'], unique=False)

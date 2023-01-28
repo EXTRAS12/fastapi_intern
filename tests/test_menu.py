@@ -51,7 +51,8 @@ def test_menu():
 
 def test_patch_menu():
     response = client.patch(
-        '/api/v1/menus/1', json={'title': 'update', 'description': 'update'}
+        '/api/v1/menus/1',
+        json={'title': 'update', 'description': 'update'},
     )
     assert response.json() == {
         'id': '1',
@@ -64,13 +65,16 @@ def test_patch_menu():
 
 def test_delete_menu():
     response = client.delete('/api/v1/menus/1')
-    assert response.json() == {'status': True,
-                               'message': 'The menu has been deleted'}
+    assert response.json() == {
+        'status': True,
+        'message': 'The menu has been deleted',
+    }
 
 
 def test_patch_not_found_menu():
     response = client.patch(
-        '/api/v1/menus/0', json={'title': 'update', 'description': 'updated menu'}
+        '/api/v1/menus/0',
+        json={'title': 'update', 'description': 'updated menu'},
     )
     assert response.json() == {'detail': 'menu not found'}
 
@@ -220,5 +224,7 @@ def test_delete_dish_not_found():
 
 def test_delete_menu2():
     response = client.delete('/api/v1/menus/2')
-    assert response.json() == {'status': True,
-                               'message': 'The menu has been deleted'}
+    assert response.json() == {
+        'status': True,
+        'message': 'The menu has been deleted',
+    }

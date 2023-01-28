@@ -14,7 +14,9 @@ class Menu(Base):
     dishes_count = Column(Integer, default=0)
 
     submenus = relationship(
-        'SubMenu', back_populates='menu', cascade='all, delete-orphan'
+        'SubMenu',
+        back_populates='menu',
+        cascade='all, delete-orphan',
     )
 
 
@@ -29,7 +31,9 @@ class SubMenu(Base):
 
     menu = relationship('Menu', back_populates='submenus')
     dishes = relationship(
-        'Dish', back_populates='submenu', cascade='all, delete-orphan'
+        'Dish',
+        back_populates='submenu',
+        cascade='all, delete-orphan',
     )
 
 

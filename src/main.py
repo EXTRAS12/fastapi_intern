@@ -34,11 +34,14 @@ async def db_session_middleware(request: Request, call_next):
 @app.on_event('startup')
 async def startup():
     redis = aioredis.from_url(
-        'redis://localhost', encoding='utf8', decode_responses=True)
+        'redis://localhost',
+        encoding='utf8',
+        decode_responses=True,
+    )
     FastAPICache.init(RedisBackend(redis), prefix='fastapi-cache')
 
 
-app.include_router(routes)
+app.include_router(routes, tags=['Menu rest'])
 
 
 if __name__ == '__main__':

@@ -70,11 +70,14 @@ def detail_submenu(menu_id: int, submenu_id: int, db: Session = Depends(get_db))
 
 
 @router.post(
-    '/api/v1/menus/{menu_id}/submenus', response_model=SubMenu, status_code=201
+    '/api/v1/menus/{menu_id}/submenus',
+    response_model=SubMenu,
+    status_code=201,
 )
 def create_submenu(menu_id: int, submenu: SubMenuCreate, db: Session = Depends(get_db)):
     db_submenu = service.get_submenu_by_title(
-        db=db, submenu_title=submenu.title)
+        db=db, submenu_title=submenu.title,
+    )
     if db_submenu:
         raise HTTPException(status_code=400, detail='submenu already exists')
     else:
@@ -83,7 +86,10 @@ def create_submenu(menu_id: int, submenu: SubMenuCreate, db: Session = Depends(g
 
 @router.patch('/api/v1/menus/{menu_id}/submenus/{submenu_id}', response_model=SubMenu)
 def update_submenu(
-    menu_id: int, submenu_id: int, submenu: PatchSubMenu, db: Session = Depends(get_db)
+    menu_id: int,
+    submenu_id: int,
+    submenu: PatchSubMenu,
+    db: Session = Depends(get_db),
 ):
     db_submenu = service.get_submenu_by_id(db=db, submenu_id=submenu_id)
     if db_submenu:
@@ -97,7 +103,8 @@ def update_submenu(
 @router.delete('/api/v1/menus/{menu_id}/submenus/{submenu_id}')
 def delete_submenu(menu_id: int, submenu_id: int, db: Session = Depends(get_db)):
     db_submenu = service.delete_submenu(
-        db=db, menu_id=menu_id, submenu_id=submenu_id)
+        db=db, menu_id=menu_id, submenu_id=submenu_id,
+    )
     if db_submenu is None:
         raise HTTPException(status_code=404, detail='submenu not found')
     return {'status': True, 'message': 'The submenu has been deleted'}
@@ -109,19 +116,26 @@ def delete_submenu(menu_id: int, submenu_id: int, db: Session = Depends(get_db))
     status_code=201,
 )
 def create_dish(
-    menu_id: int, submenu_id: int, dish: DishCreate, db: Session = Depends(get_db)
+    menu_id: int,
+    submenu_id: int,
+    dish: DishCreate,
+    db: Session = Depends(get_db),
 ):
     db_dish = service.get_dish_by_title(db=db, dish_title=dish.title)
     if db_dish:
         raise HTTPException(status_code=400, detail='dish already exists')
     else:
         return service.create_dish(
-            db=db, dish=dish, menu_id=menu_id, submenu_id=submenu_id
+            db=db,
+            dish=dish,
+            menu_id=menu_id,
+            submenu_id=submenu_id,
         )
 
 
 @router.get(
-    '/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes', response_model=list[Dish]
+    '/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes',
+    response_model=list[Dish],
 )
 def dishes_list(menu_id: int, submenu_id: int, db: Session = Depends(get_db)):
     dishes = service.dishes_list(db=db, submenu_id=submenu_id)
@@ -133,7 +147,10 @@ def dishes_list(menu_id: int, submenu_id: int, db: Session = Depends(get_db)):
     response_model=Dish,
 )
 def detail_dish(
-    menu_id: int, submenu_id: int, dish_id: int, db: Session = Depends(get_db)
+    menu_id: int,
+    submenu_id: int,
+    dish_id: int,
+    db: Session = Depends(get_db),
 ):
     db_dish = service.get_dish_by_id(db=db, dish_id=dish_id)
     if db_dish is None:
@@ -164,10 +181,16 @@ def update_dish(
 
 @router.delete('/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes/{dish_id}')
 def delete_dish(
-    menu_id: int, submenu_id: int, dish_id: int, db: Session = Depends(get_db)
+    menu_id: int,
+    submenu_id: int,
+    dish_id: int,
+    db: Session = Depends(get_db),
 ):
     db_dish = service.delete_dish(
-        db=db, dish_id=dish_id, menu_id=menu_id, submenu_id=submenu_id
+        db=db,
+        dish_id=dish_id,
+        menu_id=menu_id,
+        submenu_id=submenu_id,
     )
     if db_dish is None:
         raise HTTPException(status_code=404, detail='dish not found')
