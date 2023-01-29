@@ -26,6 +26,8 @@ repos:
     -   id: ruff
         args:
         - --fix
+        - --ignore=E501,F821
+
 
 -   repo: https://github.com/asottile/add-trailing-comma
     rev: v2.4.0

@@ -11,11 +11,13 @@ services:
       - .:/app
     networks:
       - web_app_network
+    env_file:
+      - .env
     environment:
       - DB_HOST=database
-      - DB_NAME=fastapi_intern
-      - DB_USER=postgres
-      - DB_PASS=postgres
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
       - SQLALCHEMY_SILENCE_UBER_WARNING=1
     ports:
       - "8080:8080"

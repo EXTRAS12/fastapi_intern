@@ -8,13 +8,16 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/app
-    environment:
-      - DB_HOST=database
-      - DB_NAME=fastapi_intern
-      - DB_USER=postgres
-      - DB_PASS=postgres
     networks:
       - web_app_network
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=database
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_PORT=${DB_PORT}
     ports:
       - "8000:8000"
     command: >
@@ -22,6 +25,7 @@ services:
     restart: always
     depends_on:
       - database
+      - redis
 
   database:
     image: postgres:15.1-alpine
@@ -32,7 +36,7 @@ services:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_INITDB_ARGS="--auth=md5"
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
     expose:
       - 5432
     networks:
@@ -43,6 +47,17 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
+
+  redis:
+    image: redis:7.0.5-alpine
+    container_name: 'redis-cache'
+    hostname: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - web_app_network
+    command: [ "redis-server" ]
 
 networks:
   web_app_network:

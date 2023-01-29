@@ -5,7 +5,7 @@ from src.main import app
 
 load_dotenv('.env')
 
-client = TestClient(app=app)
+client = TestClient(app)
 
 
 def test_get_all_menus():
