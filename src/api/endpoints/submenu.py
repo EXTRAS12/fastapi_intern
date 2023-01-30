@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi_cache.decorator import cache
 from sqlalchemy.orm import Session
 
 from src.core.utils import get_db
@@ -9,12 +10,14 @@ router = APIRouter()
 
 
 @router.get('/api/v1/menus/{menu_id}/submenus', response_model=list[SubMenu], summary='Список подменю')
+@cache(expire=30)
 def submenu_list(menu_id: int, db: Session = Depends(get_db)):
     submenus = service.get_submenu_list(db=db, menu_id=menu_id)
     return submenus
 
 
 @router.get('/api/v1/menus/{menu_id}/submenus/{submenu_id}', response_model=SubMenu, summary='Конкретное подменю')
+@cache(expire=30)
 def detail_submenu(menu_id: int, submenu_id: int, db: Session = Depends(get_db)):
     db_submenu = service.get_submenu_by_id(db=db, submenu_id=submenu_id)
     if db_submenu is None:

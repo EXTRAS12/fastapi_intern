@@ -2,6 +2,7 @@ import uvicorn
 from fastapi import FastAPI, Request, Response
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
+from fastapi_cache.decorator import cache
 from redis import asyncio as aioredis
 
 from src.api.routes import routes
@@ -31,10 +32,15 @@ async def db_session_middleware(request: Request, call_next):
 #     await database.disconnect()
 
 
+@cache()
+async def get_cache():
+    return 1
+
+
 @app.on_event('startup')
 async def startup():
     redis = aioredis.from_url(
-        'redis://localhost',
+        'redis://redis',
         encoding='utf8',
         decode_responses=True,
     )

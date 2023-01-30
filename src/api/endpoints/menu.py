@@ -11,19 +11,21 @@ from src.menuapp.schemas import CreateMenu, Menu, PatchMenu
 router = APIRouter()
 
 
-@router.get('/long/')
+@router.get('/long/', summary='Проверяем работу кэша')
 @cache(expire=30)
 def get_long():
-    time.sleep(2)
-    return 'МНОГООООО'
+    time.sleep(4)
+    return 'Пробуем работу кэш'
 
 
 @router.get('/api/v1/menus', response_model=list[Menu], summary='Список меню')
+@cache(expire=30)
 def menu_list(db: Session = Depends(get_db)):
     return service.get_menu_list(db)
 
 
 @router.get('/api/v1/menus/{menu_id}', response_model=Menu, summary='Конкретное меню')
+@cache(expire=30)
 def detail_menu(menu_id: int, db: Session = Depends(get_db)):
     menu = service.get_menu_by_id(db=db, menu_id=menu_id)
     if menu is None:

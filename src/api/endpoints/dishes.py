@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi_cache.decorator import cache
 from sqlalchemy.orm import Session
 
 from src.core.utils import get_db
@@ -33,14 +34,18 @@ def create_dish(
 
 
 @router.get('/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes', response_model=list[Dish], summary='Список блюд')
+@cache(expire=30)
 def dishes_list(menu_id: int, submenu_id: int, db: Session = Depends(get_db)):
     dishes = service.dishes_list(db=db, submenu_id=submenu_id)
     return dishes
 
 
 @router.get(
-    '/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes/{dish_id}', response_model=Dish, summary='Конкретное блюдо',
+    '/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes/{dish_id}',
+    response_model=Dish,
+    summary='Конкретное блюдо',
 )
+@cache(expire=30)
 def detail_dish(
     menu_id: int,
     submenu_id: int,
@@ -54,7 +59,9 @@ def detail_dish(
 
 
 @router.patch(
-    '/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes/{dish_id}', response_model=Dish, summary='Обновить блюдо',
+    '/api/v1/menus/{menu_id}/submenus/{submenu_id}/dishes/{dish_id}',
+    response_model=Dish,
+    summary='Обновить блюдо',
 )
 def update_dish(
     menu_id: int,
