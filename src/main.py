@@ -41,6 +41,7 @@ async def get_cache():
 async def startup():
     redis = aioredis.from_url(
         'redis://redis',
+        # 'redis://localhost',  #  для локального запуска
         encoding='utf8',
         decode_responses=True,
     )
