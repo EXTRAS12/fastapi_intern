@@ -6,22 +6,43 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: "pytest -vv"
+    command: pytest -vv tests/test_menu.py
     volumes:
       - .:/app
-    networks:
-      - web_app_network
     env_file:
       - .env
     environment:
-      - DB_HOST=database
-      - DB_NAME=${DB_NAME}
+      - DB_HOST=db_test
+      - DB_NAME=fastapi_test
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
       - SQLALCHEMY_SILENCE_UBER_WARNING=1
     ports:
       - "8080:8080"
+    depends_on:
+      - db_test
+      - redis
 
-networks:
-  web_app_network:
-    external: true
+  db_test:
+    image: postgres:15.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=fastapi_test
+    ports:
+      - "5433:5433"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d fastapi_test" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7.0.5-alpine
+    container_name: 'redis-cache'
+    hostname: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: [ "redis-server" ]
