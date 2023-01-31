@@ -12,9 +12,8 @@ sudo docker-compose up
 ## Запускаем тесты:
 
 Внимание: база должна быть пустая!
-при запущеном докере
 ```
-sudo docker-compose run web-app sh -c "pytest -s -v"
+sudo docker-compose -f docker-compose.tests.yml up
 ```
 
 
